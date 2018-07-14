@@ -1,0 +1,164 @@
+.main {
+  display: block;
+  width: 450px;
+  height: 430px;
+  border: 1px solid #A0A0A0FF;
+  background-color: #6B5B79FF;
+  box-shadow: -4px -4px 2px #A0A0A0FF;
+  font-family: Verdana, serif;
+  font-size: 20px;
+}
+
+.container-screen {
+  display: flex;
+  flex-direction: column;
+  width: 415px;
+  height: 90px;
+  margin: 25px auto 40px;
+}
+
+.screen {
+  text-align: right;
+  text-transform: uppercase;
+  background-color: #DDEDED;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.5s;
+}
+
+.screen:hover {
+  background-color: #D5FBDF;
+  color: #C90000FF;
+}
+
+/*.screen .text-vanished {
+  color: #DDEDED;
+  transition: all 1s;
+}*/
+
+.screen-input {
+  height: 34px;
+  border-bottom: 1px solid grey;
+}
+
+.screen-input span {
+  display: inline-block;
+  margin: 7px 13px; 
+  font-size: 18px;
+}
+
+.screen-output {
+  height: 55px;
+}
+
+.screen-output span {
+  display: inline-block;
+  margin: 14px;
+  font-size: 22px;
+}
+
+.container-buttons {
+  display: flex;
+  width: 415px;
+  margin: auto;
+}
+
+.buttons {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+  margin: 0 5px;
+  padding: 0 7px;
+  height: 240px;
+}
+
+.btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 4px;
+  border: 1px solid grey;
+  color: white;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.btn:active {
+  transform: translate(-3px, -3px);
+  box-shadow: 0 0 #A0A0A0FF;
+}
+
+.btn:hover {
+  color: #848484FF;
+}
+
+.btn span {
+  display: block;
+  margin: 10px; 
+}
+
+.buttons-service {
+  flex: 1;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.buttons-digits {
+  flex: 3;
+  grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.buttons-operators {
+  flex: 2;
+  grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+}
+
+.btn-service {
+  background-color: #FF8700FF;
+  height: 67px;
+  text-transform: uppercase;
+  box-shadow: -3px -3px 2px #FF8700FF;
+}
+
+.btn-service:hover {
+  background-color: #FFB27FFF;
+}
+
+.btn-service span {
+  margin: 25px auto;
+  font-size: 16px;
+}
+
+.btn-service:first-child span {
+  margin: 5px auto;
+}
+
+.btn-digit {
+  background-color: #A0A0A0FF;
+  box-shadow: -3px -3px 2px #A0A0A0FF;
+}
+
+.btn-digit:hover {
+  background-color: #CDBABAFF;
+}
+
+.btn-operator {
+  background-color: #272525FF;
+  box-shadow: -3px -3px 2px #272525FF;
+}
+
+.btn-operator:hover {
+  background-color: #001343FF;
+}
+
+.btn-operator:nth-last-child(3) {
+  grid-row: 3 / 5;
+  height: 109px;
+}
+
+.btn-operator:nth-last-child(3) span {
+  margin: 40px auto;
+}
+
+
+
+
