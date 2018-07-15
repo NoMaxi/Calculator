@@ -40,15 +40,17 @@ btnDelete.addEventListener('click', () => {
 });
 
 // Событие нажатия на клавиши цифр - формирование вводной строки
-
 btnsDigits.forEach(el => el.addEventListener('click', () => {
 	if (inputString.innerHTML.length > 0) {
-    if (/^0/.test(inputString.innerHTML)) {
+		if (/^0[\u2212\u00f7\u002b\u00d7]/.test(inputString.innerHTML)) {
+      inputString.innerHTML = inputString.innerHTML.slice(2);
+    }
+    if (/^[0\u2212\u00f7\u002b\u00d7]/.test(inputString.innerHTML)) {
       inputString.innerHTML = inputString.innerHTML.slice(1);
     }
     inputString.innerHTML += el.firstChild.innerHTML;
   }
-}))
+}));
 
 // Событие нажатия на клавиши вычитания, деления, сложения и умножения - формирование вводной строки
 btnsOperators.forEach(el => el.addEventListener('click', () => {
@@ -63,13 +65,16 @@ btnsOperators.forEach(el => el.addEventListener('click', () => {
 
 // Событие обработки процентов - клавиша '%'
 btnPercent.addEventListener('click', () => {
-  inputString.innerHTML = replacePercent(inputString.innerHTML);
+	if (inputString.innerHTML != 0 && /[\u2212\u00f7\u002b\u00d7]/g.test(inputString.innerHTML)) {
+		inputString.innerHTML = replacePercent(inputString.innerHTML);
+	}
 });
 
 // Событие отображения результата расчета в строке вывода - клавиша '='
 btnEqual.addEventListener('click', () => {
+	// Перенос результата расчёта во вводную строку при повторном нажатии клавиши '='
   if (inputStringEval(outputString.innerHTML) == inputStringEval(inputString.innerHTML)) {
-    inputString.innerHTML = outputString.innerHTML;   // Перенос результата расчёта во вводную строку при повторном нажатии клавиши '='
+    inputString.innerHTML = outputString.innerHTML;   
   }
   outputString.innerHTML = calcErrorCheck(inputStringEval(inputString.innerHTML));
 });
@@ -77,7 +82,7 @@ btnEqual.addEventListener('click', () => {
 // Функция замены знаков сложения, вычитатния, деления и умножения
 replaceOperators = (str) => {
    const replacedOperatorsString = str.replace(/\u2212/g, '-').replace(/\u00f7/g, '/')
-   .replace(/\u002b/g, '+').replace(/\u00d7/g, '*');
+   .replace(/\u002b/g, '+').replace(/\u00d7/g, '*').replace(/--/g, '+');
    return replacedOperatorsString;
 };
 
@@ -96,17 +101,11 @@ replaceRadic = (str) => {
 
 // Функция обработки знака процентов
 replacePercent = (str) => {
-  const percentNumber = str.match(/\d*\.*\d*$/)[0];
-  const unReplacedStringPart = str.split(/\d*\.*\d*$/)[0];
-  const replacedStringPart = (eval(unReplacedStringPart.slice(0, -1)) * percentNumber / 100).toString(10);
+  const percentNumber = str.match(/\d+\.*\d*$/)[0];
+  const unReplacedStringPart = str.split(/\d+\.*\d*$/)[0];
+  const replacedStringPart = (inputStringEval(unReplacedStringPart.slice(0, -1)) * percentNumber / 100).toString(10);
   const replacedPercentString = unReplacedStringPart + replacedStringPart;
   return replacedPercentString;
-};
-
-consecutiveOperatorsReplace = (str, operator) => {
-	if (/[\u2212\u00f7\u002b\u00d7]$/.test(str)) {
-    	inputString.innerHTML.replace(/[\u2212\u00f7\u002b\u00d7]$/, operator);
-  }
 };
 
 // Функция формирования итоговой вводной строки
@@ -114,6 +113,7 @@ inputStringPrepare = (str) => {
   return replaceRadic(replaceOperators(str));
 };
 
+// Функция вычисления вводной строки
 inputStringEval = (str) => {
   return eval(inputStringPrepare(str));
 };
@@ -141,4 +141,4 @@ calcErrorCheck = (evalResult) => {
       return evalResult;
       break;
   }
-}
+};
